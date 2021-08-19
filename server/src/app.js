@@ -13,11 +13,13 @@ app.use(morgan('combined'))
 //easy parsing of json data
 app.use(express.json())
 
-app.get('/status', (req, res) => {
+app.use(cors())
+app.post('/register', (req, res) => {
     res.send({
-        message: 'hello world'
+        message: `Hello ${req.body.username}! You've registered successfully!`
     })
 })
+
 const port = process.env.PORT || 8081
 
 app.listen(port)
