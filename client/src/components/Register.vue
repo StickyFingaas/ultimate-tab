@@ -1,43 +1,58 @@
 <template>
-  <div>
-    <h1>Register</h1>
-    <div class="form-div">
-      <form @submit.prevent="register">
-        <input
-          type="text"
-          name="username"
-          placeholder="username"
-          v-model="username"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          v-model="password"
-        />
-        <button type="submit">Register</button>
-      </form>
+  <q-layout view="hHh lpR fFf">
+    <div>
+      <h2>Register</h2>
+
+      <div class="form-div">
+        <q-form @submit.prevent="onSubmit">
+          <q-input
+            type="text"
+            name="username"
+            placeholder="username"
+            v-model="username"
+          />
+          <q-input
+            type="password"
+            name="password"
+            placeholder="password"
+            v-model="password"
+          />
+          <div v-if="message">
+            <p :class="divClass">{{ message }}</p>
+          </div>
+          <q-btn type="submit">Register</q-btn>
+        </q-form>
+      </div>
     </div>
-  </div>
+  </q-layout>
 </template>
 
 <script>
-import RegistrationService from "../services/RegistrationService.js";
+import RegistrationService from "../boot/RegistrationService.js";
 export default {
   data() {
     return {
       username: "",
       password: "",
+      message: null,
+      divClass: "",
     };
   },
   methods: {
     //asynchronously waiting for registration to complete
-    async register() {
-      const response = await RegistrationService.register({
-        username: this.username,
-        password: this.password,
-      });
-      console.log(response.data);
+    async onSubmit() {
+      try {
+        await RegistrationService.register({
+          username: this.username,
+          password: this.password,
+        });
+        this.divClass = "success";
+        this.message = "Successful entry!";
+      } catch (error) {
+        //returns the adequate error into
+        this.divClass = "error";
+        this.message = error.response.data.error;
+      }
     },
   },
 };
@@ -52,7 +67,15 @@ export default {
   align-content: space-between;
 }
 
-input {
+q-input {
   margin-bottom: 1em;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
 }
 </style>
