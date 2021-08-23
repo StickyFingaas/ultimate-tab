@@ -20,11 +20,11 @@ const __dirname = dirname(__filename);
 
 const sequelize = new Sequelize(
     config.db.database,
+    //config.db.email,
     config.db.username,
     config.db.password,
     config.db.options
 )
-
 
 //looks for all files in model folder and loads them into sequelize object
 

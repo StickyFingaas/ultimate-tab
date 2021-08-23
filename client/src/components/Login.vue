@@ -3,12 +3,12 @@
     <q-page class="window-height window-width row justify-center items-center">
       <div class="column">
         <div class="row" id="row1">
-          <h5 class="text-h5 text-white q-my-md">Register</h5>
+          <h5 class="text-h5 text-white q-my-md">Login</h5>
         </div>
         <div class="row">
           <q-card square bordered class="q-pa-lg shadow-1">
             <q-card-section>
-              <q-form class="q-gutter-md" autofocus>
+              <q-form class="q-gutter-md" autofocus autocomplete>
                 <q-input
                   square
                   filled
@@ -18,19 +18,7 @@
                   label="email"
                   lazy-rules
                   :rules="[
-                    (val) => (val && val.length > 0) || 'Enter an email',
-                  ]"
-                />
-                <q-input
-                  square
-                  filled
-                  clearable
-                  v-model="username"
-                  type="username"
-                  label="username"
-                  lazy-rules
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Enter a username',
+                    (val) => (val && val.length > 0) || 'Enter your email',
                   ]"
                 />
                 <q-input
@@ -42,7 +30,7 @@
                   label="password"
                   lazy-rules
                   :rules="[
-                    (val) => (val && val.length > 0) || 'Enter a password',
+                    (val) => (val && val.length > 0) || 'Enter your password',
                   ]"
                 >
                   <template v-slot:append>
@@ -64,14 +52,14 @@
                 color="light-green-7"
                 size="lg"
                 class="full-width"
-                label="Register"
+                label="Login"
                 @click="onSubmit"
               />
             </q-card-actions>
             <q-card-section class="text-center q-pa-none">
               <p class="text-grey-6">
-                Already registered?
-                <router-link to="login">Log in.</router-link>
+                Not registered?
+                <router-link to="register">Do it here.</router-link>
               </p>
             </q-card-section>
           </q-card>
@@ -87,7 +75,6 @@ export default {
   data() {
     return {
       email: "",
-      username: "",
       password: "",
       message: null,
       divClass: "",
@@ -95,16 +82,15 @@ export default {
     };
   },
   methods: {
-    //asynchronously waiting for registration to complete
+    //asynchronously waiting for login to complete
     async onSubmit() {
       try {
-        await AuthenticationService.register({
+        await AuthenticationService.login({
           email: this.email,
-          username: this.username,
           password: this.password,
         });
         this.divClass = "success";
-        this.message = "Successful registration!";
+        this.message = "Successful login!";
       } catch (error) {
         //returns the adequate error into
         this.divClass = "error";

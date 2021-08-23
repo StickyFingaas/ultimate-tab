@@ -1,16 +1,21 @@
-
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
+      { path: '/home', name: "home", component: () => import('pages/Index.vue') },
       {
-        path: '/register',
-        name: 'register',
+        path: '/login',
+        name: 'login',
         //lazy loading of components - for performance improvement
-        component: () => import('../components/Register.vue')
-    }
+        component: () => import('../components/Login.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      //lazy loading of components - for performance improvement
+      component: () => import('../components/Register.vue')
+  }
     ]
   },
 
