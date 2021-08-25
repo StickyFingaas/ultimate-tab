@@ -25,10 +25,10 @@
       <q-space />
       <q-tabs v-model="tab" shrink>
         <router-link to="login" style="color: white; text-decoration: none">
-          <q-tab name="tab1" label="Login" />
+          <q-tab v-if="isLoggedIn === false" name="tab1" label="Login" />
         </router-link>
         <router-link to="register" style="color: white; text-decoration: none">
-          <q-tab name="tab2" label="Sign Up" />
+          <q-tab v-if="isLoggedIn === false" name="tab2" label="Sign Up" />
         </router-link>
       </q-tabs>
     </q-toolbar>
@@ -38,6 +38,7 @@
 <script>
 export default {
   name: "Header",
+
   data() {
     return {
       leftDrawerOpen: null,
@@ -46,6 +47,12 @@ export default {
   emits: {
     passEvent: () => {
       return !this.leftDrawerOpen ? false : true;
+    },
+  },
+  computed: {
+    //get value is presented as a computed property, not as a const as it changes (obviously)
+    isLoggedIn() {
+      return this.$store.getters["showbase/getLoggedIn"];
     },
   },
 };

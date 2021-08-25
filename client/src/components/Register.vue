@@ -14,6 +14,7 @@
                   filled
                   clearable
                   v-model="email"
+                  name="email"
                   type="email"
                   label="email"
                   lazy-rules
@@ -26,6 +27,7 @@
                   filled
                   clearable
                   v-model="username"
+                  name="username"
                   type="username"
                   label="username"
                   lazy-rules
@@ -83,6 +85,7 @@
 
 <script>
 import AuthenticationService from "../boot/AuthenticationService.js";
+
 export default {
   data() {
     return {
@@ -98,11 +101,16 @@ export default {
     //asynchronously waiting for registration to complete
     async onSubmit() {
       try {
-        await AuthenticationService.register({
+        const response = await AuthenticationService.register({
           email: this.email,
           username: this.username,
           password: this.password,
         });
+
+        //we only want to track logged users (? - look into this during later development)
+        // this.$store.dispatch("showbase/setToken", response.data.token); //calls the vuex store action which modifies the state; module uses namespaced: true so we must reference both the module and the action
+        // this.$store.dispatch("showbase/setUser", response.data.user);
+
         this.divClass = "success";
         this.message = "Successful registration!";
       } catch (error) {

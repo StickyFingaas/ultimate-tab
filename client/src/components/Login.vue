@@ -15,6 +15,7 @@
                   clearable
                   v-model="email"
                   type="email"
+                  name="email"
                   label="email"
                   lazy-rules
                   :rules="[
@@ -85,10 +86,13 @@ export default {
     //asynchronously waiting for login to complete
     async onSubmit() {
       try {
-        await AuthenticationService.login({
+        const response = await AuthenticationService.login({
           email: this.email,
           password: this.password,
         });
+        this.$store.dispatch("showbase/setToken", response.data.token); //calls the vuex store action which modifies the state; module uses namespaced: true so we must reference both the module and the action
+        this.$store.dispatch("showbase/setUser", response.data.user);
+
         this.divClass = "success";
         this.message = "Successful login!";
       } catch (error) {
