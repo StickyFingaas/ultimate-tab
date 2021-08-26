@@ -15,7 +15,13 @@ const routes = [
       name: 'register',
       //lazy loading of components - for performance improvement
       component: () => import('../components/Register.vue')
-  }
+  },
+  {
+    path: '/songs',
+    name: 'songs',
+    //lazy loading of components - for performance improvement
+    component: () => import('../components/Songs.vue')
+}
     ]
   },
 
