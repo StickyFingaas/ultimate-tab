@@ -2,13 +2,24 @@
   <q-layout view="lHh LpR fff">
     <q-page class="window-height window-width row justify-center items-center">
       <panel title="Songs">
+        <template v-slot:action>
+          <router-link to="create" style="text-decoration: none">
+            <q-btn
+              round
+              color="positive"
+              size="md"
+              icon="add"
+              style="z-index: 1"
+            />
+          </router-link>
+        </template>
         <div
           class="q-pa-md row inline items-start q-gutter-md shadow-box shadow-2"
           v-for="song in songs"
           :key="song.id"
         >
           <q-card class="my-card" flat bordered>
-            <q-img class="img" :src="song.albumImage" />
+            <q-img class="img" :src="song.albumImage" :alt="song.title" />
 
             <q-card-section>
               <q-card-section>
@@ -52,7 +63,18 @@
             </q-card-section>
 
             <q-card-actions class="justify-center">
-              <q-btn color="primary" label="Details" />
+              <q-btn
+                color="primary"
+                label="Details"
+                @click="
+                  navigate({
+                    name: 'song',
+                    params: {
+                      songId: song.id,
+                    },
+                  })
+                "
+              />
 
               <q-btn color="primary"
                 ><a
@@ -81,6 +103,11 @@ export default {
   },
   components: {
     Panel,
+  },
+  methods: {
+    navigate(route) {
+      this.$router.push(route);
+    },
   },
   async mounted() {
     this.songs = (await SongsService.getAllSongs()).data; //axios has a data property in its return object

@@ -1,13 +1,14 @@
 <template>
   <div class="column">
-    <div class="row" id="row1">
-      <q-bar dark class="bg-primary text-white" style="min-width: 60vw">
+    <div class="row justify-center" id="row1">
+      <q-bar dark class="bg-primary text-white" style="min-width: 45vw">
         <div class="col text-center text-weight-bold">{{ title }}</div>
+        <slot name="action" />
       </q-bar>
     </div>
     <div class="row">
-      <q-card square bordered class="q-pa-lg shadow-1" style="min-width: 60vw">
-        <slot>Slot title</slot>
+      <q-card square bordered class="q-pa-lg shadow-1" style="min-width: 45vw">
+        <slot></slot>
       </q-card>
     </div>
   </div>
@@ -16,7 +17,7 @@
 <script>
 export default {
   name: "Panel",
-  props: ["title"],
+  props: ["title", "width"],
 };
 </script>
 
