@@ -1,13 +1,13 @@
 <template>
-  <div class="column">
+  <div class="column" style="overflow: hidden">
     <div class="row justify-center" id="row1">
-      <q-bar dark class="bg-primary text-white" style="min-width: 45vw">
+      <q-bar dark class="bg-primary text-white" :style="style">
         <div class="col text-center text-weight-bold">{{ title }}</div>
         <slot name="action" />
       </q-bar>
     </div>
     <div class="row">
-      <q-card square bordered class="q-pa-lg shadow-1" style="min-width: 45vw">
+      <q-card square bordered class="q-pa-lg shadow-1" :style="style">
         <slot></slot>
       </q-card>
     </div>
@@ -17,7 +17,16 @@
 <script>
 export default {
   name: "Panel",
-  props: ["title", "width"],
+  props: {
+    title: null,
+    width: null,
+  },
+  computed: {
+    style() {
+      const width = this.width; //call individual props and not props.prop
+      return `min-width: ${width}vw`;
+    },
+  },
 };
 </script>
 

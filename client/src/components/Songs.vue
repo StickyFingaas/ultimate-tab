@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh LpR fff">
     <q-page class="window-height window-width row justify-center items-center">
-      <panel title="Songs">
+      <panel title="Songs" width="45">
         <template v-slot:action>
           <router-link to="create" style="text-decoration: none">
             <q-btn
@@ -9,7 +9,7 @@
               color="positive"
               size="md"
               icon="add"
-              style="z-index: 1"
+              style="margin-top: 2em; z-index: 1"
             />
           </router-link>
         </template>

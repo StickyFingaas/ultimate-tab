@@ -23,7 +23,7 @@ const routes = [
     component: () => import('../components/Songs.vue')
 },
 {
-  path: '/song/:songId',
+  path: '/songs/:songId',
   name: 'song',
   //lazy loading of components - for performance improvement
   component: () => import('../components/ViewSong.vue')
@@ -33,6 +33,12 @@ const routes = [
     name: 'create',
     //lazy loading of components - for performance improvement
     component: () => import('../components/CreateSong.vue')
+},
+{
+  path: '/edit/:songId',
+  name: 'edit',
+  //lazy loading of components - for performance improvement
+  component: () => import('../components/EditSong.vue')
 }
     ]
   },

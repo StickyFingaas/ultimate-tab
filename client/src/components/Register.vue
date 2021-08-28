@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh LpR fff">
     <q-page class="window-height window-width row justify-center items-center">
-      <panel title="Register">
+      <panel title="Register" width="30">
         <q-card-section>
           <q-form class="q-gutter-md" autofocus>
             <q-input

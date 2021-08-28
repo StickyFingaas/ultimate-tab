@@ -4,7 +4,7 @@
       class="window-height window-width row justify-evenly items-center"
       id="page"
     >
-      <panel title="Create Song" width="30">
+      <panel title="Edit Song Info" width="30">
         <q-card
           class="q-gutter-md"
           autofocus
@@ -98,7 +98,7 @@
         </q-card>
       </panel>
 
-      <panel title="Add tab and lyrics" width="45">
+      <panel title="Edit tab and lyrics" width="45">
         <q-card
           class="q-gutter-md"
           autofocus
@@ -139,9 +139,9 @@
               color="positive"
               size="md"
               class="half-width"
-              label="Create a song"
+              label="Confirm edit"
               style="margin: 0 auto"
-              @click="create"
+              @click="update"
             />
           </q-card-actions>
         </q-card>
@@ -157,6 +157,7 @@ export default {
   data() {
     return {
       song: {
+        id: null,
         title: null,
         artist: null,
         album: null,
@@ -191,21 +192,28 @@ export default {
     Panel,
   },
   methods: {
-    async create() {
+    async update() {
       const filledIn = Object.keys(this.song).every((key) => !!this.song[key]);
       if (!filledIn) {
         this.error = "You must fill out every field!";
         return;
       }
       try {
-        await SongsService.createSong(this.song);
+        await SongsService.updateSong(this.song);
         this.$router.push({
-          name: "songs",
+          name: "song",
+          params: {
+            songId: this.song.id,
+          },
         });
       } catch (err) {
         console.log(err);
       }
     },
+  },
+  async mounted() {
+    const id = this.$store.state.route.params.songId;
+    this.song = (await SongsService.showSong(id)).data;
   },
 };
 </script>

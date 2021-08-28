@@ -2,7 +2,7 @@
   <q-header
     elevated
     class="bg-primary text-white shadow-2 fixed-top"
-    style="z-index: 1"
+    style="z-index: 999"
   >
     <q-toolbar>
       <q-btn
@@ -15,7 +15,7 @@
       />
 
       <q-toolbar-title style="text-align: left">
-        <router-link to="home">
+        <router-link to="/home">
           <q-avatar>
             <img src="../assets/image.jpg" />
           </q-avatar>
@@ -25,16 +25,16 @@
 
       <q-space />
       <q-tabs shrink>
-        <router-link to="songs" style="color: white; text-decoration: none">
+        <router-link to="/songs" style="color: white; text-decoration: none">
           <q-tab name="tab3" label="Browse" />
         </router-link>
-        <router-link to="login" style="color: white; text-decoration: none">
+        <router-link to="/login" style="color: white; text-decoration: none">
           <q-tab v-if="isLoggedIn === false" name="tab1" label="Login" />
         </router-link>
-        <router-link to="register" style="color: white; text-decoration: none">
+        <router-link to="/register" style="color: white; text-decoration: none">
           <q-tab v-if="isLoggedIn === false" name="tab2" label="Sign Up" />
         </router-link>
-        <router-link to="home" style="color: white; text-decoration: none">
+        <router-link to="/home" style="color: white; text-decoration: none">
           <q-tab
             v-if="isLoggedIn === true"
             name="tab2"
