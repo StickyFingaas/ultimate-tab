@@ -89,6 +89,13 @@ export default {
 
         this.divClass = "success";
         this.message = "Successful login!";
+        setTimeout(
+          () =>
+            this.$router.push({
+              name: "songs",
+            }),
+          1000
+        );
       } catch (error) {
         //returns the adequate error into
         this.divClass = "error";

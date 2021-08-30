@@ -82,19 +82,17 @@
               </q-item>
             </q-list>
             <q-card-actions class="justify-center">
-              <q-btn
-                color="primary"
-                label="Details"
-                @click="
-                  navigate({
-                    name: 'song',
-                    params: {
-                      songId: song.id,
-                    },
-                  })
-                "
-              />
-
+              <router-link
+                :to="{
+                  name: 'song',
+                  params: {
+                    songId: song.id,
+                  },
+                }"
+                style="text-decoration: none; margin: 1em"
+              >
+                <q-btn color="primary" label="Details" />
+              </router-link>
               <q-btn color="primary"
                 ><a
                   :href="song.youtubeId"
@@ -150,15 +148,9 @@ export default {
           "content-length"
         ]; //if this is 2, empty object of songs is returned
         this.error = data;
-        console.log(this.error);
         this.songs = (await SongsService.getAllSongs(value)).data; //mounted is commented out bcs the immediate property makes the request immediate on load
       },
       immediate: true,
-    },
-  },
-  methods: {
-    navigate(route) {
-      this.$router.push(route);
     },
   },
   // async mounted() {

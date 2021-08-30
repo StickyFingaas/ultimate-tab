@@ -102,6 +102,13 @@ export default {
 
         this.divClass = "success";
         this.message = "Successful registration!";
+        setTimeout(
+          () =>
+            this.$router.push({
+              name: "login",
+            }),
+          1000
+        );
       } catch (error) {
         //returns the adequate error into
         this.divClass = "error";
