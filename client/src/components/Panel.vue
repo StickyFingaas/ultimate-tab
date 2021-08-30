@@ -1,5 +1,5 @@
 <template>
-  <div class="column" style="overflow: hidden">
+  <div class="column shadow-2" style="overflow: hidden">
     <div class="row justify-center" id="row1">
       <q-bar dark class="bg-primary text-white" :style="style">
         <div class="col text-center text-weight-bold">{{ title }}</div>
@@ -7,8 +7,8 @@
       </q-bar>
     </div>
     <div class="row">
-      <q-card square bordered class="q-pa-lg shadow-1" :style="style">
-        <slot></slot>
+      <q-card square bordered class="q-pa-md shadow-1" :style="style">
+        <slot>No content detected</slot>
       </q-card>
     </div>
   </div>
@@ -24,7 +24,7 @@ export default {
   computed: {
     style() {
       const width = this.width; //call individual props and not props.prop
-      return `min-width: ${width}vw`;
+      return `min-width: ${width}vw; max-width: 85vw;`;
     },
   },
 };

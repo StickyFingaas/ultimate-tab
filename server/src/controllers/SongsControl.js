@@ -1,16 +1,37 @@
 //for storing rest endpoints
 import db from "../models/index.js"
+//CommonJS module needed
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+//sequelize object Operator which comes handy to use in where clauses
+const { Op } = require("sequelize");
 
 const {Song} = db
-
 
 export default {
     async getAllSongs (req, res){
         try {
-            //findAll, create, update etc. are built-in Sequelize methods
-            const songs = await Song.findAll({
+            let songs = null
+            const search = req.query.search //in client/SongsService.js the parameter defined inside a get request
+            if(search){
+                songs = await Song.findAll({
+                    where: {
+                        [Op.or]: ['title', 'artist', 'album', 'genre']
+                        .map(key => ({
+                            [key]: {
+                                [Op.iLike]: `%${search}%`
+                                //basically, returns songs where any of its 4 attributes defined above
+                                //contains the input value in their name
+                            }
+                        }))
+                    }
+                })
+            }else{
+                //findAll, create, update etc. are built-in Sequelize methods
+             songs = await Song.findAll({
                 limit: 10 // for testing purposes
             })
+            }
             res.send(songs)
         } catch (err) {
             res.status(500).send({

@@ -23,7 +23,7 @@ app.use(cors())
 route(app)
 
 //force: true drops all tables upon app build
-db.sequelize.sync({force: true}).then(() => {
+db.sequelize.sync().then(() => {
     app.listen(config.port)
     console.log(`Server started on port ${config.port}`);
 }).catch((err) => {

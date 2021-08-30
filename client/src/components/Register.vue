@@ -72,7 +72,6 @@
 
 <script>
 import AuthenticationService from "../boot/AuthenticationService.js";
-import Panel from "./Panel.vue";
 export default {
   data() {
     return {
@@ -84,9 +83,9 @@ export default {
       isPwd: true,
     };
   },
-  components: {
-    Panel,
-  },
+  // components: {
+  //   Panel,
+  // },
   methods: {
     //asynchronously waiting for registration to complete
     async onSubmit() {

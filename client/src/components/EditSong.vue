@@ -151,7 +151,6 @@
 </template>
 
 <script>
-import Panel from "./Panel.vue";
 import SongsService from "../boot/SongsService";
 export default {
   data() {
@@ -188,9 +187,9 @@ export default {
       ],
     };
   },
-  components: {
-    Panel,
-  },
+  // components: {
+  //   Panel,
+  // },
   methods: {
     async update() {
       const filledIn = Object.keys(this.song).every((key) => !!this.song[key]);

@@ -10,19 +10,23 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.0.0",
+    "@quasar/extras": "^1.10.12",
     "axios": "^0.21.1",
-    "core-js": "^3.6.5",
+    "core-js": "^3.16.4",
+    "lodash": "^4.17.21",
+    "lodash.debounce": "^4.0.8",
     "quasar": "^2.0.0",
+    "vue-router": "^4.0.11",
     "vuex": "^4.0.2",
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",
     "@quasar/app": "^3.0.0",
+    "@types/lodash": "^4.14.172",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-vue": "^7.0.0",
+    "eslint-plugin-vue": "^7.17.0",
     "eslint-webpack-plugin": "^2.4.0"
   },
   "browserslist": [

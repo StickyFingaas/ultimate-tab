@@ -20,7 +20,7 @@ const routes = [
     path: '/songs',
     name: 'songs',
     //lazy loading of components - for performance improvement
-    component: () => import('../components/Songs.vue')
+    component: () => import('../components/Songs/Index.vue')
 },
 {
   path: '/songs/:songId',
