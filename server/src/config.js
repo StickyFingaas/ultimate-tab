@@ -1,3 +1,7 @@
+import path from 'path'
+import { dirname } from 'path';
+
+const __dirname = dirname('../../ultimatetab.postgres');
 
 export default {
     port: process.env.PORT || 8081,
@@ -9,7 +13,8 @@ export default {
         options: {
             dialect: 'postgres',
             host: process.env.HOST || 'localhost',
-            storage: './ultimatetab.postgres'
+            //storage: './ultimatetab.postgres' //path for the file which loads the configuration
+            storage: path.resolve(__dirname)
         }
     },
     //jwt authentication
