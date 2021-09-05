@@ -37,6 +37,13 @@ fs.readdirSync(__dirname).filter(file => file !== 'index.js').forEach(file => {
     db[model.name] = model
 })
 
+//set associations (if they exist) between db models
+Object.keys(db).forEach((modelName) => {
+    if('associate' in db[modelName]){//if an database model contains an associate method, then it's related to another model
+        db[modelName].associate(db)
+    }
+})
+
 
 //attaches the sequelize object to the file
 db.sequelize = sequelize

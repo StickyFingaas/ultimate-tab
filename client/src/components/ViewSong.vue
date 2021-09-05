@@ -66,6 +66,18 @@
                     })
                   "
                 />
+                <q-btn
+                  v-if="isLoggedIn && !bookmark"
+                  color="positive"
+                  icon-right="turned_in"
+                  @click="setBookmark"
+                />
+                <q-btn
+                  v-if="isLoggedIn && bookmark"
+                  color="negative"
+                  icon-right="bookmark_border"
+                  @click="unsetBookmark"
+                />
               </q-card-actions>
             </q-card-section>
           </q-card-section>
@@ -104,10 +116,14 @@
 
 <script>
 import SongsService from "../boot/SongsService";
+import BookmarksService from "../boot/BookmarksService";
+
 export default {
   data() {
     return {
       song: {},
+      isLoggedIn: this.$store.getters["showbase/getLoggedIn"], //vuex getter which returns if the user is logged in
+      bookmark: null,
     };
   },
   // components: {
@@ -115,12 +131,47 @@ export default {
   // },
   //whenever the router changes, the changes in its params are reflected in Vuex state - router and state are synchronized
   async mounted() {
-    const id = this.$store.state.route.params.songId;
-    this.song = (await SongsService.showSong(id)).data;
+    try {
+      const id = this.$store.state.route.params.songId;
+      this.song = (await SongsService.showSong(id)).data; // AxiosResponse is an object, and data is its property
+      if (!this.isLoggedIn) {
+        return;
+      }
+      this.bookmark = (
+        await BookmarksService.getBookmark({
+          songId: this.song.id,
+          userId: this.$store.state.showbase.user.id, //prop user is defined in the state, marks the logged user
+        })
+      ).data;
+
+      //this.bookmark = !!bookmark; //convert the value into true or false
+    } catch (error) {
+      console.log(error);
+    }
   },
   methods: {
     navigate(route) {
       this.$router.push(route);
+    },
+    async setBookmark() {
+      try {
+        this.bookmark = (
+          await BookmarksService.createBookmark({
+            songId: this.song.id,
+            userId: this.$store.state.showbase.user.id, //prop user is defined in the state, marks the logged user
+          })
+        ).data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async unsetBookmark() {
+      try {
+        await BookmarksService.deleteBookmark(this.bookmark.id);
+        this.bookmark = null;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

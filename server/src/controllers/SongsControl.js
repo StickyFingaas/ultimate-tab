@@ -21,7 +21,7 @@ export default {
                             [key]: {
                                 [Op.iLike]: `%${search}%`
                                 //basically, returns songs where any of its 4 attributes defined above
-                                //contains the input value in their name
+                                //contains the input value in their name, case ignored
                             }
                         }))
                     }
