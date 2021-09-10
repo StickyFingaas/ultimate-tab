@@ -1,25 +1,63 @@
 <template>
   <q-layout view="hHh LpR lFf">
     <Header @leftDrawer="toggleDrawer" />
+    <q-drawer
+      class="shadow-2"
+      v-model="leftDrawerOpen"
+      bordered
+      :width="200"
+      :breakpoint="500"
+    >
+      <q-scroll-area class="fit">
+        <q-list padding class="menu-list">
+          <q-item clickable v-ripple :to="{ name: 'songs' }" exact>
+            <q-item-section avatar>
+              <q-icon name="audiotrack" />
+            </q-item-section>
+            <q-item-section> Songs </q-item-section>
+          </q-item>
+          <q-item
+            clickable
+            v-ripple
+            v-if="isLoggedIn"
+            :to="{
+              name: 'bookmarks',
+              params: {
+                userId: user,
+              },
+            }"
+            exact
+          >
+            <q-item-section avatar>
+              <q-icon name="turned_in" />
+            </q-item-section>
 
-    <q-drawer v-model="leftDrawerOpen" side="left" bordered>
-      drawer content
+            <q-item-section> Bookmarks </q-item-section>
+          </q-item>
+          <q-item
+            clickable
+            v-ripple
+            v-if="isLoggedIn"
+            :to="{
+              name: 'history',
+              params: {
+                userId: user,
+              },
+            }"
+            exact
+          >
+            <q-item-section avatar>
+              <q-icon name="history" />
+            </q-item-section>
+
+            <q-item-section> Recent </q-item-section>
+          </q-item>
+        </q-list>
+      </q-scroll-area>
     </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
-
-    <!-- <q-footer elevated class="bg-grey-8 text-white">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="../assets/image.jpg" />
-          </q-avatar>
-          Ultimate Tab
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-footer> -->
   </q-layout>
 </template>
 
@@ -35,6 +73,14 @@ export default {
   },
   components: {
     Header,
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters["showbase/getLoggedIn"];
+    },
+    user() {
+      return this.$store.getters["showbase/getUser"].id;
+    },
   },
   methods: {
     toggleDrawer() {

@@ -168,6 +168,5 @@ export default {
 .img {
   width: 250px;
   height: 150px;
-  background-size: cover;
 }
 </style>

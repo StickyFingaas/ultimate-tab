@@ -1,21 +1,40 @@
-//for storing rest endpoints
-import db from "../models/index.js"
-const {Bookmark} = db
+import db from "../models/index.js" //for storing rest endpoints
+const {Bookmark, Song} = db
+
+import _ from 'lodash' //all functionalities from lodash library
 
 export default {
     async getBookmark (req, res){
             try {
                 //const songId = req.query.songId
-                //returns a bookmark if the user has one for a particular song
+                //returns the user's bookmarked songs
                 const {songId, userId} = req.query
-                const bookmark = await Bookmark.findOne({
-                        where: {
-                            SongId: songId,
-                            UserId: userId //both required to fetch the bookmark
-                        }
+
+                const condition = {
+                    UserId: userId //for getting all of user's bookmarks we only need his id
+                }
+
+                if(songId){
+                    condition.SongId = songId //optionally, for a specific bookmark
+                }
+
+                const bookmarks = await Bookmark.findAll({
+                        where: condition,
+                        include: [
+                            {
+                                model: Song//also returns the data about the song which is bookmarked
+                            }
+                        ]
                 })
-                res.send(bookmark)
+                //also it's better to map an array (of objects) after it's asynchronously retrieved
+                //extend function assigns the song object to a new object containing the bookmark id
+                const newBookmarks = bookmarks.map(bookmark => bookmark.toJSON()).map(bookmark => _.extend(
+                    {},
+                    bookmark.Song,
+                    bookmark))
+                res.send(newBookmarks)
             } catch (err) {
+                console.log(err);
                 res.status(500).send({
                     error: "An error has occurred trying to fetch the bookmark!"
                 })

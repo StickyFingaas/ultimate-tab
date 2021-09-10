@@ -1,7 +1,7 @@
 <template>
   <q-header
     elevated
-    class="bg-primary text-white shadow-2 fixed-top"
+    class="bg-primary text-white fixed-top"
     style="z-index: 999"
   >
     <q-toolbar>
@@ -24,24 +24,29 @@
       >
 
       <q-space />
+
       <q-tabs shrink>
         <router-link to="/songs" style="color: white; text-decoration: none">
           <q-tab name="tab3" label="Browse" />
         </router-link>
         <router-link to="/login" style="color: white; text-decoration: none">
-          <q-tab v-if="isLoggedIn === false" name="tab1" label="Login" />
+          <q-tab v-if="!isLoggedIn" name="tab1" label="Login" />
         </router-link>
         <router-link to="/register" style="color: white; text-decoration: none">
-          <q-tab v-if="isLoggedIn === false" name="tab2" label="Sign Up" />
+          <q-tab v-if="!isLoggedIn" name="tab2" label="Sign Up" />
         </router-link>
         <router-link to="/home" style="color: white; text-decoration: none">
           <q-tab
-            v-if="isLoggedIn === true"
+            v-if="isLoggedIn"
             name="tab2"
             label="Log Out"
             @click="logout"
           />
         </router-link>
+        <q-badge v-if="isLoggedIn" name="user" :label="user" />
+        <q-avatar v-if="isLoggedIn">
+          <img src="../assets/icon.png" />
+        </q-avatar>
       </q-tabs>
     </q-toolbar>
   </q-header>
@@ -61,6 +66,9 @@ export default {
     //get value is presented as a computed property, not as a const as it changes (obviously)
     isLoggedIn() {
       return this.$store.getters["showbase/getLoggedIn"];
+    },
+    user() {
+      return this.$store.getters["showbase/getUser"].username;
     },
   },
   methods: {

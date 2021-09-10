@@ -1,6 +1,7 @@
 import AuthenticationControl from "./controllers/AuthenticationControl.js"
 import SongsControl from "./controllers/SongsControl.js"
 import BookmarksControl from "./controllers/BookmarksControl.js"
+import HistoriesControl from "./controllers/HistoriesControl.js"
 import register from "./policies/RegisterPolicy.js"
 
 //we initialize the http request routes and expect an express object argument,
@@ -15,6 +16,9 @@ const route = (app) => {
     app.get('/bookmarks', BookmarksControl.getBookmark)
     app.post('/bookmarks', BookmarksControl.createBookmark)
     app.delete('/bookmarks/:bookmarkId', BookmarksControl.deleteBookmark)
+    app.get('/history', HistoriesControl.getHistory)
+    app.post('/history', HistoriesControl.createHistory)
+
 }
 
 

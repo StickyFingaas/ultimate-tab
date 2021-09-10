@@ -1,5 +1,5 @@
 <template>
-  <div class="column shadow-2" style="overflow: hidden">
+  <div class="column" style="overflow: hidden">
     <div class="row justify-center" id="row1">
       <q-bar dark class="bg-primary text-white" :style="style">
         <div class="col text-center text-weight-bold">{{ title }}</div>
@@ -7,7 +7,7 @@
       </q-bar>
     </div>
     <div class="row">
-      <q-card square bordered class="q-pa-md shadow-1" :style="style">
+      <q-card square bordered class="q-pa-md shadow-2" :style="style">
         <slot>No content detected</slot>
       </q-card>
     </div>

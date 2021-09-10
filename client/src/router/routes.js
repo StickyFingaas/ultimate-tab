@@ -40,6 +40,18 @@ const routes = [
   name: 'edit',
   //lazy loading of components - for performance improvement
   component: () => import('../components/EditSong.vue')
+},
+{
+  path: '/bookmarks/:userId',
+  name: 'bookmarks',
+  //lazy loading of components - for performance improvement
+  component: () => import('../components/SongsBookmarks.vue')
+},
+{
+  path: '/history/:userId',
+  name: 'history',
+  //lazy loading of components - for performance improvement
+  component: () => import('../components/RecentlyViewed.vue')
 }
     ]
   },

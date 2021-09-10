@@ -117,12 +117,14 @@
 <script>
 import SongsService from "../boot/SongsService";
 import BookmarksService from "../boot/BookmarksService";
-
+import SongsHistoryService from "../boot/SongsHistoryService";
 export default {
   data() {
     return {
       song: {},
       isLoggedIn: this.$store.getters["showbase/getLoggedIn"], //vuex getter which returns if the user is logged in
+      user: this.$store.getters["showbase/getUser"],
+
       bookmark: null,
     };
   },
@@ -137,13 +139,19 @@ export default {
       if (!this.isLoggedIn) {
         return;
       }
-      this.bookmark = (
+      await SongsHistoryService.createHistory({
+        songId: id,
+        userId: this.user.id,
+      });
+      const bookmarks = (
         await BookmarksService.getBookmark({
           songId: this.song.id,
-          userId: this.$store.state.showbase.user.id, //prop user is defined in the state, marks the logged user
+          userId: this.user.id, //prop user is defined in the state, marks the logged user
         })
       ).data;
-
+      if (bookmarks.length) {
+        this.bookmark = bookmarks[0]; //since backend has been changed to getAll bookmarks
+      }
       //this.bookmark = !!bookmark; //convert the value into true or false
     } catch (error) {
       console.log(error);

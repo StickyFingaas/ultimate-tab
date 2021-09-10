@@ -15,6 +15,8 @@ const Promise = require('bluebird')
 import songs from './songs.json'
 import users from './users.json'
 import bookmarks from './bookmarks.json'
+import histories from './histories.json'
+
 
 //{force: true} drops all tables upon app build
 db.sequelize.sync({force: true}).then(async function () {
@@ -29,5 +31,8 @@ db.sequelize.sync({force: true}).then(async function () {
 
     //must come after first 2 promise functions because it's associated to both models
     await Promise.all(bookmarks.map(bookmark => {db.Bookmark.create(bookmark)}))
+
+    await Promise.all(histories.map(history => {db.History.create(history)}))
+
 
 })
