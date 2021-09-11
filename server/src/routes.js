@@ -3,6 +3,7 @@ import SongsControl from "./controllers/SongsControl.js"
 import BookmarksControl from "./controllers/BookmarksControl.js"
 import HistoriesControl from "./controllers/HistoriesControl.js"
 import register from "./policies/RegisterPolicy.js"
+import authorize from './policies/AuthorizationPolicy.js' // REST endpoints for which we want to check user authorization should contain this imported module
 
 //we initialize the http request routes and expect an express object argument,
 //defined in app.js file, and it gets the control over the http request methods defined below
@@ -13,11 +14,11 @@ const route = (app) => {
     app.get('/songs/:songId', SongsControl.showSong)
     app.post('/songs', SongsControl.createSong)
     app.put('/songs/:songId', SongsControl.updateSong)
-    app.get('/bookmarks', BookmarksControl.getBookmark)
-    app.post('/bookmarks', BookmarksControl.createBookmark)
-    app.delete('/bookmarks/:bookmarkId', BookmarksControl.deleteBookmark)
-    app.get('/history', HistoriesControl.getHistory)
-    app.post('/history', HistoriesControl.createHistory)
+    app.get('/bookmarks', authorize, BookmarksControl.getBookmark)
+    app.post('/bookmarks', authorize, BookmarksControl.createBookmark)
+    app.delete('/bookmarks/:bookmarkId', authorize, BookmarksControl.deleteBookmark)
+    app.get('/history', authorize, HistoriesControl.getHistory)
+    app.post('/history', authorize, HistoriesControl.createHistory)
 
 }
 

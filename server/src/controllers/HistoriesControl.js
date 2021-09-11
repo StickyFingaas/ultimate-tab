@@ -8,8 +8,7 @@ export default {
             try {
                 //const songId = req.query.songId
                 //returns the user's bookmarked songs
-                const {userId} = req.query
-
+                const userId = req.user.id // user which is confirmed to have a valid JWT token - check AuthorizationPolicy.js
                 const histories = await History.findAll({
                     where: {
                         UserId: userId
@@ -37,7 +36,9 @@ export default {
     },
     async createHistory (req, res){
         try {
-            const {songId, userId} = req.body
+            const userId = req.user.id // user which is confirmed to have a valid JWT token - check AuthorizationPolicy.js
+
+            const {songId} = req.body
             const history = await History.create({ SongId: songId, UserId: userId})
             res.send(history)
         } catch (err) {

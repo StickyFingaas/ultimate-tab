@@ -24,7 +24,7 @@
         </template>
       </q-input>
     </div>
-    <template v-if="error == 2"><h5>No content detected.</h5></template>
+    <template v-if="error == 2"><h5>No content found.</h5></template>
     <template v-else>
       <div
         class="row inline items-start q-gutter-md"

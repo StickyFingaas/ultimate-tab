@@ -30,9 +30,11 @@ export default {
   async mounted() {
     if (this.isLoggedIn) {
       const backBookmarks = (
-        await BookmarksService.getBookmark({
-          userId: this.$store.getters["showbase/getUser"].id,
-        })
+        await BookmarksService
+          .getBookmark
+
+          //{userId: this.$store.getters["showbase/getUser"].id,} - no need to pass this prop because of JWT authorization in backend
+          ()
       ).data;
 
       this.bookmarks = backBookmarks.map((bookmark) => {

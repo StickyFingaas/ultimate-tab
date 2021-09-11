@@ -9,7 +9,7 @@ const {User} = db
 //helper function for sending a jwt token to validate user login
 function jwtSignUser(user){
     const ONE_WEEK = 60 * 60 * 24 * 7
-    return jwt.sign(user, config.authentication.jwtSecret, {
+    return jwt.sign(user, config.authentication.jwtSecret, { //creates a JWT string payload which is later used for endpoint authentication
         expiresIn: ONE_WEEK
     })
 }

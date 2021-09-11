@@ -62,9 +62,10 @@ export default {
   async mounted() {
     if (this.isLoggedIn) {
       const backBookmarks = (
-        await SongsHistoryService.getHistory({
-          userId: this.$store.getters["showbase/getUser"].id,
-        })
+        await SongsHistoryService
+          .getHistory
+          //{userId: this.$store.getters["showbase/getUser"].id,}
+          ()
       ).data;
 
       this.histories = backBookmarks

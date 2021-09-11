@@ -1,4 +1,4 @@
-import  express from 'express'
+import express from 'express'
 //easily logs http requests
 import morgan from 'morgan'
 //essentially enables resource sharing between backend and frontend
@@ -9,6 +9,9 @@ import config from './config.js'
 import db from './models/index.js'
 //all http requests are set in this file
 import route from './routes.js'
+
+//passport module which is used for REST authentication
+import passport from './passport.js'
 
 //basic express server
 const app = express()

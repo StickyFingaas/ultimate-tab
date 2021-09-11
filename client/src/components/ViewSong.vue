@@ -141,12 +141,13 @@ export default {
       }
       await SongsHistoryService.createHistory({
         songId: id,
-        userId: this.user.id,
+        //userId: this.user.id,
       });
       const bookmarks = (
         await BookmarksService.getBookmark({
           songId: this.song.id,
-          userId: this.user.id, //prop user is defined in the state, marks the logged user
+          //commented out the following because userId is going to be extracted from the JWT in the backend
+          // userId: this.user.id, //prop user is defined in the state, marks the logged user
         })
       ).data;
       if (bookmarks.length) {
@@ -166,7 +167,8 @@ export default {
         this.bookmark = (
           await BookmarksService.createBookmark({
             songId: this.song.id,
-            userId: this.$store.state.showbase.user.id, //prop user is defined in the state, marks the logged user
+            //same reason as above - userId is extracted from JWT in the backend
+            //userId: this.$store.state.showbase.user.id, //prop user is defined in the state, marks the logged user
           })
         ).data;
       } catch (error) {

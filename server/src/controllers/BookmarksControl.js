@@ -6,18 +6,15 @@ import _ from 'lodash' //all functionalities from lodash library
 export default {
     async getBookmark (req, res){
             try {
-                //const songId = req.query.songId
-                //returns the user's bookmarked songs
-                const {songId, userId} = req.query
-
+                //const {userId, songId} = req.query - before JWT authorization
+                const userId = req.user.id // user which is confirmed to have a valid JWT token - check AuthorizationPolicy.js
+                const {songId} = req.query //returns the user's bookmarked songs
                 const condition = {
                     UserId: userId //for getting all of user's bookmarks we only need his id
                 }
-
                 if(songId){
                     condition.SongId = songId //optionally, for a specific bookmark
                 }
-
                 const bookmarks = await Bookmark.findAll({
                         where: condition,
                         include: [
@@ -43,7 +40,9 @@ export default {
     },
     async createBookmark (req, res){
         try {
-            const {songId, userId} = req.body
+            //const {userId, songId} = req.query - before JWT authorization
+            const userId = req.user.id // user which is confirmed to have a valid JWT token - check AuthorizationPolicy.js
+            const {songId} = req.body
             const bookmark = await Bookmark.findOne({
                 where: {
                     SongId: songId,
@@ -65,10 +64,21 @@ export default {
     },
     async deleteBookmark (req, res){
         try {
+            const userId = req.user.id // user which is confirmed to have a valid JWT token - check AuthorizationPolicy.js
             const {bookmarkId} = req.params
-            const deletedBookmark = await Bookmark.findByPk(bookmarkId)
-            await deletedBookmark.destroy()
-            res.send(deletedBookmark)
+            const bookmark = await Bookmark.findOne({
+                where: {
+                    id: bookmarkId,
+                    UserId: userId
+                }
+            })
+            if(!bookmark){
+                return res.status(403).send({
+                    error: "You do not have access to this bookmark!"
+                })
+            }
+            await bookmark.destroy()
+            res.send(bookmark)
         } catch (err) {
             res.status(500).send({
                 error: "An error has occurred trying to delete the bookmark!"

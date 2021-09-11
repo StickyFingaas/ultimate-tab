@@ -74,7 +74,6 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("showbase/setToken", null);
-      this.$store.dispatch("showbase/setToken", null);
     },
   },
 };
