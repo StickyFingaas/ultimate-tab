@@ -55,6 +55,7 @@
               </q-list>
               <q-card-actions class="justify-center">
                 <q-btn
+                  v-if="isLoggedIn"
                   color="primary"
                   label="Edit"
                   @click="
@@ -124,10 +125,10 @@ export default {
       song: {},
       isLoggedIn: this.$store.getters["showbase/getLoggedIn"], //vuex getter which returns if the user is logged in
       user: this.$store.getters["showbase/getUser"],
-
       bookmark: null,
     };
   },
+
   // components: {
   //   Panel,
   // },

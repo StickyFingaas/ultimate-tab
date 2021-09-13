@@ -15,11 +15,11 @@
       />
 
       <q-toolbar-title style="text-align: left">
-        <router-link to="/home">
-          <q-avatar>
-            <img src="../assets/image.jpg" />
-          </q-avatar>
-        </router-link>
+        <!-- <router-link to="/songs"> -->
+        <q-avatar>
+          <img src="../assets/image.jpg" />
+        </q-avatar>
+        <!-- </router-link> -->
         Ultimate Tab</q-toolbar-title
       >
 
@@ -35,7 +35,7 @@
         <router-link to="/register" style="color: white; text-decoration: none">
           <q-tab v-if="!isLoggedIn" name="tab2" label="Sign Up" />
         </router-link>
-        <router-link to="/home" style="color: white; text-decoration: none">
+        <router-link to="/" style="color: white; text-decoration: none">
           <q-tab
             v-if="isLoggedIn"
             name="tab2"

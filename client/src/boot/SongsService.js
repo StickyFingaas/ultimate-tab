@@ -1,10 +1,8 @@
 import axios from './axios.js'
 
 const apiServices = {
-    getAllSongs: (search) => axios().get('songs', {
-        params: {
-            search: search
-        }
+    getAllSongs: (songs) => axios().get('songs', {
+        params:  songs
     }),
     showSong: (id) => axios().get(`songs/${id}`),
     createSong: (song) => axios().post('songs', song),

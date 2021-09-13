@@ -13,8 +13,22 @@ export default {
         try {
             let songs = null
             const search = req.query.search //in client/SongsService.js the parameter defined inside a get request
+            const pageAsNumber = parseInt(req.query.page)
+            //const sizeAsNumber = parseInt(req.query.size)
+            const size = 4
+            //pagination checks
+            let page = 0
+            if(!isNaN(pageAsNumber) && pageAsNumber > 0){
+                page = pageAsNumber
+            }
+
+            //let size = 4
+            // if(!isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 4){
+            //     size = sizeAsNumber
+            // }
+
             if(search){
-                songs = await Song.findAll({
+                songs = await Song.findAndCountAll({
                     where: {
                         [Op.or]: ['title', 'artist', 'album', 'genre']
                         .map(key => ({
@@ -24,15 +38,22 @@ export default {
                                 //contains the input value in their name, case ignored
                             }
                         }))
-                    }
+                    },
+                    limit: size, //pagination related
+                    offset: page * size //pagination related (page starts at 0)
                 })
             }else{
                 //findAll, create, update etc. are built-in Sequelize methods
-             songs = await Song.findAll({
-                limit: 10 // for testing purposes
+             songs = await Song.findAndCountAll({
+                limit: size, //pagination related
+                offset: page * size //pagination related (page starts at 0)
             })
             }
-            res.send(songs)
+            //res.send(songs)
+            res.send({
+                content: songs.rows,
+                totalPages: Math.ceil(songs.count / size)
+            })
         } catch (err) {
             res.status(500).send({
                 error: "An error has occurred trying to fetch the songs!"

@@ -4,7 +4,6 @@ const routes = [
     redirect: 'songs',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '/home', name: "home", component: () => import('pages/Index.vue') },
       {
         path: '/login',
         name: 'login',

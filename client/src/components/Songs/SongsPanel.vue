@@ -1,6 +1,6 @@
 <template>
   <panel title="Songs" width="45" style="margin: 1em">
-    <template v-slot:action>
+    <template v-slot:action v-if="isLoggedIn">
       <router-link to="create" style="text-decoration: none">
         <q-btn
           round
@@ -24,7 +24,7 @@
         </template>
       </q-input>
     </div>
-    <template v-if="error == 2"><h5>No content found.</h5></template>
+    <template v-if="error == 29"><h5>No content found.</h5></template>
     <template v-else>
       <div
         class="row inline items-start q-gutter-md"
@@ -38,13 +38,13 @@
             <div class="text-subtitle2">by {{ song.artist }}</div>
           </q-card-section>
           <q-card-section>
-            <q-list style="">
-              <q-item>
+            <q-list>
+              <q-item class="justify-between">
                 <q-item-section avatar>
                   <q-icon color="primary" name="album" />
                 </q-item-section>
 
-                <q-item-section style="max-width: 7vw">
+                <q-item-section style="max-width: 10vw">
                   <q-item-label>Album</q-item-label>
                   <q-item-label
                     caption
@@ -105,6 +105,9 @@
           </q-card-section>
         </q-card-section>
       </div>
+      <div class="q-pa-lg flex flex-center">
+        <q-pagination push v-model="current" :max="max" />
+      </div>
     </template>
   </panel>
 </template>
@@ -118,6 +121,9 @@ export default {
       songs: null,
       search: "",
       error: null,
+      isLoggedIn: this.$store.getters["showbase/getLoggedIn"],
+      current: 1,
+      max: null,
     };
   },
   // components: {
@@ -136,6 +142,7 @@ export default {
       if (newValue !== "") {
         route.query = {
           search: newValue, //'search' will be included after '?' followed by '=${this.search}'
+          // page: this.current,
         };
       }
       this.$router.push(route);
@@ -144,18 +151,43 @@ export default {
       //we want our input field to bind the query param upon refresh
       async handler(value) {
         //this.search = value;
-        const data = (await SongsService.getAllSongs(value)).headers[
-          "content-length"
-        ]; //if this is 2, empty object of songs is returned
+
+        const data = (await SongsService.getAllSongs({ search: value }))
+          .headers["content-length"]; //if this is 0, empty object of songs is returned
         this.error = data;
-        this.songs = (await SongsService.getAllSongs(value)).data; //mounted is commented out bcs the immediate property makes the request immediate on load
+        const allSongs = (await SongsService.getAllSongs({ search: value }))
+          .data;
+        this.songs = allSongs.content; //mounted is commented out bcs the immediate property makes the request immediate on load
+        this.max = allSongs.totalPages;
+      },
+      immediate: true,
+    },
+    current: function (newValue) {
+      const value = newValue - 1;
+      const route = {
+        name: "songs", //route is always defined as an object w/ name, optionally params (ex. /:id) or queries (ex. ?search=name)
+      };
+      route.query = {
+        page: value, //'search' will be included after '?' followed by '=${this.search}'
+      };
+
+      this.$router.push(route);
+    },
+    "$route.query.page": {
+      async handler(value) {
+        const data = (await SongsService.getAllSongs({ page: value })).headers[
+          "content-length"
+        ]; //if this is 29, empty object of songs is returned
+        this.error = data;
+        const allSongs = (await SongsService.getAllSongs({ page: value })).data;
+        this.songs = allSongs.content; //mounted is commented out bcs the immediate property makes the request immediate on load
       },
       immediate: true,
     },
   },
-  // async mounted() {
-  //   this.songs = (await SongsService.getAllSongs()).data; //axios has a data property in its return object
-  // },
+  mounted() {
+    this.$router.replace({ query: null }); //on page refresh it resets the search query params
+  },
 };
 </script>
 
