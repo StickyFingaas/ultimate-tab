@@ -178,7 +178,7 @@ export default {
         (val) => (val && val.length > 0) || "Enter the song YouTube link",
         (val) =>
           val.match("https://www.youtube.com/embed/.+") ||
-          "Enter a valid YT url format (embed instead of watch?v=)",
+          "Enter a valid YT URL (https://youtube.com/embed/...)",
       ],
       imageRules: [
         (val) => (val && val.length > 0) || "Enter the album image link",
@@ -190,6 +190,11 @@ export default {
   // components: {
   //   Panel,
   // },
+  watch: {
+    yearRules(newVal) {
+      console.log(newVal);
+    },
+  },
   methods: {
     async update() {
       const filledIn = Object.keys(this.song).every((key) => !!this.song[key]);
@@ -197,6 +202,7 @@ export default {
         this.error = "You must fill out every field!";
         return;
       }
+
       try {
         await SongsService.updateSong(this.song);
         this.$router.push({

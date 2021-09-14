@@ -177,7 +177,7 @@ export default {
         (val) => (val && val.length > 0) || "Enter the song YouTube link",
         (val) =>
           val.match("https://www.youtube.com/embed/.+") ||
-          "Enter a valid YT url format (embed instead of watch?v=)",
+          "Enter a valid YT URL (https://youtube.com/embed/...)",
       ],
       imageRules: [
         (val) => (val && val.length > 0) || "Enter the album image link",
@@ -197,7 +197,8 @@ export default {
         return;
       }
       try {
-        await SongsService.createSong(this.song);
+        const song = await SongsService.createSong(this.song);
+        console.log(song);
         this.$router.push({
           name: "songs",
         });
