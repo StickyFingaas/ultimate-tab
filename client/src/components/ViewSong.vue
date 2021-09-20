@@ -135,7 +135,7 @@ export default {
   //whenever the router changes, the changes in its params are reflected in Vuex state - router and state are synchronized
   watch: {
     async song() {
-      this.song.hits++; //song view count increases on each page visit
+      this.song.views++; //song view count increases on each page visit
       await SongsService.updateSong(this.song);
     },
   },

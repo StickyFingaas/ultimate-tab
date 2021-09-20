@@ -56,7 +56,7 @@
             <q-item-section avatar>
               <q-icon name="swap_vert" />
             </q-item-section>
-            <q-item-section>Song Views</q-item-section>
+            <q-item-section>Songs by Views</q-item-section>
           </q-item>
         </q-list>
       </q-scroll-area>

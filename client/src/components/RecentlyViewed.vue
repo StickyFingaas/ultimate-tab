@@ -26,14 +26,6 @@ export default {
       histories: [],
       columns: [
         {
-          name: "id",
-          required: true,
-          label: "ID",
-          field: "id",
-          align: "left",
-          sortable: false,
-        },
-        {
           name: "title",
           align: "center",
           label: "TITLE",

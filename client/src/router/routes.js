@@ -56,7 +56,7 @@ const routes = [
   path: '/views',
   name: 'views',
   //lazy loading of components - for performance improvement
-  component: () => import('../components/SongViews.vue')
+  component: () => import('../components/SongsByViews.vue')
 }
     ]
   },

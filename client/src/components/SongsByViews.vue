@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh LpR fff">
     <q-page class="window-height window-width row justify-evenly items-center">
-      <panel title="Song Views" width="30" style="margin: 1em" class="shadow-2">
+      <panel title="Songs by Views" width="30" style="margin: 1em" class="shadow-2">
         <q-table
           :rows="songs"
           :columns="columns"
@@ -19,13 +19,6 @@ export default {
     return {
       songs: [],
       columns: [
-        {
-          name: "id",
-          required: true,
-          label: "ID",
-          field: "id",
-          align: "left",
-        },
         {
           name: "title",
           align: "center",
@@ -46,6 +39,7 @@ export default {
           align: "center",
           label: "VIEWS",
           field: "views",
+          sortable: true
         },
         ,
       ],
@@ -55,20 +49,21 @@ export default {
   },
   methods: {
     onRowClick(event, row) {
-      this.$router.push("/songs/" + row.SongId);
+      this.$router.push("/songs/" + row.id);
     },
   },
   async mounted() {
-    if (this.isLoggedIn) {
-      const allSongs = (await SongsService.getAllSongs()).data;
-      // this.songs = allSongs.map((song) => {
-      //   const { id, title, artist, album, genre, year, views, SongId } = song;
-      //   return { id, title, artist, album, genre, year, views, SongId };
-      // });
-      this.songs = { allSongs };
-      console.log(allSongs);
-    }
-  },
+    // goal is to collect songs from all subsets of pages and merge them into one array
+      const response = (await SongsService.getAllSongs()).data
+      const pages = response.totalPages
+      for (let i = 0; i < pages; i++) {
+        this.songs.push((await SongsService.getAllSongs({page: i})).data.content)
+      
+      }
+      this.songs = this.songs.flat() //all sub-arrays are concatenated into the main array
+      console.log(this.songs);
+}
+  
 };
 </script>
 

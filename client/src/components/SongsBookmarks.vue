@@ -5,6 +5,7 @@
         <q-table
           :title="user"
           :rows="bookmarks"
+          :columns="columns"
           row-key="id"
           @row-click="onRowClick"
         />
@@ -18,6 +19,24 @@ export default {
   data() {
     return {
       bookmarks: [],
+       columns: [
+        {
+          name: "title",
+          align: "center",
+          label: "TITLE",
+          field: "title",
+        },
+        {
+          name: "artist",
+          align: "center",
+          label: "ARTIST",
+          field: "artist",
+        },
+        { name: "album", align: "center", label: "ALBUM", field: "album" },
+        { name: "genre", align: "center", label: "GENRE", field: "genre" },
+        { name: "year", align: "center", label: "YEAR", field: "year" },
+        ,
+      ],
       isLoggedIn: this.$store.getters["showbase/getLoggedIn"], //vuex getter which returns if the user is logged in
       user: this.$store.getters["showbase/getUser"].username,
     };
