@@ -133,6 +133,13 @@ export default {
   //   Panel,
   // },
   //whenever the router changes, the changes in its params are reflected in Vuex state - router and state are synchronized
+  watch: {
+    async song() {
+      this.song.hits++; //song view count increases on each page visit
+      await SongsService.updateSong(this.song);
+    },
+  },
+
   async mounted() {
     try {
       const id = this.$store.state.route.params.songId;
@@ -144,6 +151,7 @@ export default {
         songId: id,
         //userId: this.user.id,
       });
+
       const bookmarks = (
         await BookmarksService.getBookmark({
           songId: this.song.id,

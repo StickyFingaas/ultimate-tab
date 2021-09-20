@@ -51,6 +51,12 @@ const routes = [
   name: 'history',
   //lazy loading of components - for performance improvement
   component: () => import('../components/RecentlyViewed.vue')
+},
+{
+  path: '/views',
+  name: 'views',
+  //lazy loading of components - for performance improvement
+  component: () => import('../components/SongViews.vue')
 }
     ]
   },
