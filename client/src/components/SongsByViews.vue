@@ -3,13 +3,52 @@
     <q-page class="window-height window-width row justify-evenly items-center">
       <panel title="Songs by Views" width="30" style="margin: 1em" class="shadow-2">
         <q-table
+        
           :rows="songs"
           :columns="columns"
           row-key="id"
           @row-click="onRowClick"
-        />
-      </panel> </q-page
-  ></q-layout>
+        >
+ <template v-slot:body-cell="props">
+         <q-td key="albumImage" :props="props">
+              <img :src="props.row.albumImage" style="width: 5em; height: 5em; object-fit: cover" /> 
+          </q-td>
+          
+        <q-td key="title" :props="props">
+            <q-badge color="secondary" style="padding: 5px">
+              {{ props.row.title }}
+            </q-badge>
+          </q-td>
+          <q-td key="artist" :props="props">
+            <q-badge color="accent" style="padding: 5px">
+              {{ props.row.artist }}
+            </q-badge>
+          </q-td>
+          <q-td key="album" :props="props" >
+            <q-badge color="positive" style="padding: 5px">
+              {{ props.row.album }}
+            </q-badge>
+          </q-td>
+          <q-td key="genre" :props="props">
+            <q-badge color="negative" style="padding: 5px">
+              {{ props.row.genre }}
+            </q-badge>
+          </q-td>
+           <q-td key="year" :props="props">
+            <q-badge color="info" style="padding: 5px">
+              {{ props.row.year }}
+            </q-badge>
+          </q-td>
+           <q-td key="views" :props="props">
+            <q-badge color="warning" style="padding: 5px">
+              {{ props.row.views }}
+            </q-badge>
+          </q-td> 
+      </template>
+         </q-table>
+      </panel> 
+      </q-page>
+      </q-layout>
 </template>
 
 <script>
@@ -20,23 +59,29 @@ export default {
       songs: [],
       columns: [
         {
+          name: "albumImage",
+          align: "left",
+          label: "ALBUM COVER",
+          field: "albumImage",
+        },
+        {
           name: "title",
-          align: "center",
+          align: "left",
           label: "TITLE",
           field: "title",
         },
         {
           name: "artist",
-          align: "center",
+          align: "left",
           label: "ARTIST",
           field: "artist",
         },
-        { name: "album", align: "center", label: "ALBUM", field: "album" },
-        { name: "genre", align: "center", label: "GENRE", field: "genre" },
-        { name: "year", align: "center", label: "YEAR", field: "year" },
+        { name: "album", align: "left", label: "ALBUM", field: "album" },
+        { name: "genre", align: "left", label: "GENRE", field: "genre" },
+        { name: "year", align: "left", label: "YEAR", field: "year" },
         {
           name: "views",
-          align: "center",
+          align: "left",
           label: "VIEWS",
           field: "views",
           sortable: true
@@ -61,7 +106,6 @@ export default {
       
       }
       this.songs = this.songs.flat() //all sub-arrays are concatenated into the main array
-      console.log(this.songs);
 }
   
 };

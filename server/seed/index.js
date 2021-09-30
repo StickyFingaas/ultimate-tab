@@ -16,6 +16,8 @@ import songs from './songs.json'
 import users from './users.json'
 import bookmarks from './bookmarks.json'
 import histories from './histories.json'
+import ratings from './ratings.json'
+
 
 
 //{force: true} drops all tables upon app build
@@ -33,6 +35,8 @@ db.sequelize.sync({force: true}).then(async function () {
     await Promise.all(bookmarks.map(bookmark => {db.Bookmark.create(bookmark)}))
 
     await Promise.all(histories.map(history => {db.History.create(history)}))
+
+    await Promise.all(ratings.map(rating => {db.Rating.create(rating)}))
 
 
 })
