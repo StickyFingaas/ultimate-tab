@@ -8,8 +8,11 @@ module.exports = (sequelize, DataTypes) => {
 
     Rating.associate = (models) => {
         //1-1 relation to User and Song
-        Rating.belongsTo(models.User)
-        Rating.belongsTo(models.Song)
+
+        //*for User* This is almost the same as belongsTo with one exception - The foreign key will be defined on the target model. 
+        //*has to be defined as well in the foreign key model*
+        Rating.hasOne(models.User, {as: 'User', foreignKey: 'UserId'})
+        Rating.belongsTo(models.Song, {as: 'Song', foreignKey: 'SongId'})
     }
 
     return Rating

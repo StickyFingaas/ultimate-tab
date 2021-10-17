@@ -27,7 +27,6 @@ export default {
                     history))
                 res.send(_.uniqBy(newHistory, history => history.SongId)) //lodash function which returns unique/non-duplicate songs in the histories array
             } catch (err) {
-                console.log(err);
                 res.status(500).send({
                     error: "An error has occurred trying to fetch the history!"
                 })
@@ -37,12 +36,10 @@ export default {
     async createHistory (req, res){
         try {
             const userId = req.user.id // user which is confirmed to have a valid JWT token - check AuthorizationPolicy.js
-
             const {songId} = req.body
             const history = await History.create({ SongId: songId, UserId: userId})
             res.send(history)
         } catch (err) {
-            console.log(err);
             res.status(500).send({
                 err: "An error has occurred trying to create the history!"
             })

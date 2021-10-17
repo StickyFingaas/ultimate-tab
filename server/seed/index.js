@@ -8,7 +8,7 @@ import db from '../src/models/index.js'
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
-//promise library which allows to convert node modules into promises
+//bluebird - promise library which allows to convert node modules into promises
 //in order use their functions asynchronously;
 const delay = require('delay')
 const Promise = require('bluebird')

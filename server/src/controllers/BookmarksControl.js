@@ -31,7 +31,6 @@ export default {
                     bookmark))
                 res.send(newBookmarks)
             } catch (err) {
-                console.log(err);
                 res.status(500).send({
                     error: "An error has occurred trying to fetch the bookmark!"
                 })

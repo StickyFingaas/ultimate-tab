@@ -26,8 +26,6 @@ export default {
                 token: jwtSignUser(userJson)
             })
        } catch (err) {
-        console.log(err)
-
            res.status(400).send({
                error: `This username is already in use!`
            })
@@ -64,7 +62,6 @@ export default {
                 token: jwtSignUser(userJson)
             })
         } catch (err) {
-            console.log(err);
             res.status(400).send({
                 error: 'There has been an error while trying to log in!'
             })

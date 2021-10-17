@@ -44,6 +44,10 @@ module.exports = (sequelize, DataTypes) => {
     }
     )
 
+    User.associate = (models) => { //because Rating model requires an User foreign key, it needs to be defined on this side as well, hasOne (Rating) -> hasMany (User)
+        //also constraints: false prevents the cyclic dependency exception
+        User.hasMany(models.Rating, {foreignKey: 'UserId', constraints: false })
+    }
     //we give the User prototype object a function which compares the input and stored passwords
     User.prototype.comparePassword = function (password) {
         return bcrypt.compare(password, this.password)
