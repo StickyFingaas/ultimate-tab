@@ -21,7 +21,7 @@ const route = (app) => {
     app.get('/history', authorize, HistoriesControl.getHistory)
     app.post('/history', authorize, HistoriesControl.createHistory)
     app.post('/ratings', RatingsControl.createRating)
-    // app.put('/ratings/:ratingId', authorize, RatingsControl.updateRating)
+    //app.put('/ratings/:ratingId', authorize, RatingsControl.updateRating)
     // app.delete('/ratings/:ratingId', authorize, RatingsControl.deleteRating)
     app.get('/ratings/:songId', RatingsControl.getSongRatings)
 

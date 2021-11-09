@@ -18,7 +18,6 @@ export default {
                 ratings.averageRating = avgRating
                 res.send(ratings)
             } catch (err) {
-                console.log(err);
                 res.status(500).send({
                     error: "An error has occurred trying to fetch the ratings!"
                 })
@@ -32,23 +31,20 @@ export default {
              const {songRating, songId, userId} = req.body
              const foundRating = await Rating.findOne({
                  where: {
-                     rating: songRating,
                      SongId: songId,
                      UserId: userId
                  }
              })
-             console.log(foundRating);
-             if(foundRating){
-                const updatedRating = await Rating.update({rating: songRating, SongId: songId, UserId: userId}, {
-                    where: {
-                        SongId: songId,
-                        UserId: userId
-                    }
+             
+             if(!foundRating){
+                const newRating = await Rating.create({rating: songRating, SongId: songId, UserId: userId})
+                res.send(newRating)
+            }else{
+                res.status(400).send({
+                    error: "You can't rate a song more than once!"
                 })
-                res.send(updatedRating)
             }
-            const newRating = await Rating.create({rating: songRating, SongId: songId, UserId: userId})
-            res.send(newRating)
+            
         } catch (err) {
             console.log(err);
             res.status(500).send({
@@ -56,10 +52,11 @@ export default {
             })
         }
     },
+    
     // async updateRating(req, res){
 
     // },
-    async deleteRating(req, res){
+    // async deleteRating(req, res){
 
-    },
+    // },
 }
