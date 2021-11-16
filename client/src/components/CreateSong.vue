@@ -174,7 +174,7 @@ export default {
           "Enter a valid year (1900-current)",
       ],
       urlRules: [
-        (val) => (val && val.length > 0) || "Enter the song YouTube link",
+        (val) => (val && val.length > 0) || "Enter the YouTube link",
         (val) =>
           val.match("https://www.youtube.com/embed/.+") ||
           "Enter a valid YT URL (https://youtube.com/embed/...)",

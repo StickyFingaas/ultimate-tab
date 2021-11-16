@@ -8,7 +8,7 @@ export default {
             try {
                 const {songId} = req.params //returns the user's bookmarked songs
                 const condition = {
-                    SongId: songId 
+                    SongId: songId
                 }
                 const ratings = await Rating.findAndCountAll({
                         where: condition,
@@ -24,6 +24,7 @@ export default {
              }
 
     },
+
     async createRating(req, res){
         try {
              //const {userId, songId} = req.query - before JWT authorization
@@ -35,16 +36,16 @@ export default {
                      UserId: userId
                  }
              })
-             
+
              if(!foundRating){
                 const newRating = await Rating.create({rating: songRating, SongId: songId, UserId: userId})
                 res.send(newRating)
             }else{
-                res.status(400).send({
+                res.send({
                     error: "You can't rate a song more than once!"
                 })
             }
-            
+
         } catch (err) {
             console.log(err);
             res.status(500).send({
@@ -52,11 +53,51 @@ export default {
             })
         }
     },
-    
-    // async updateRating(req, res){
 
-    // },
-    // async deleteRating(req, res){
+    async updateRating(req, res){
+        try {
+            const rating = await Rating.findOne({
+                where: {
 
-    // },
+                        id: req.params.ratingId,
+                        UserId: req.body.UserId
+
+                }
+            })
+
+            if(!rating){
+                res.status(400).send({
+                    error: "Rating and user data do not match!"
+                })
+            }else{
+                await Rating.update(req.body, {
+                    where: {
+                        id: req.params.ratingId
+                    }
+                })
+                res.send(req.body)
+            }
+        } catch (err) {
+            res.status(500).send({
+                error: "An error has occurred trying to update the rating!"
+            })
+        }
+    },
+
+    async deleteRating(req, res){
+        try {
+            const {ratingId} = req.params
+            const deletedRating = await Rating.findOne({
+                where: {
+                    id: ratingId
+                }
+            })
+            await deletedRating.destroy()
+            res.send(`Rating ${ratingId} deleted!`)
+        } catch (error) {
+            res.status(500).send({
+                error: "An error has occurred trying to delete the rating!"
+            })
+        }
+    },
 }

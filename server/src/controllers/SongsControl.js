@@ -40,13 +40,19 @@ export default {
                         }))
                     },
                     limit: size, //pagination related
-                    offset: page * size //pagination related (page starts at 0)
+                    offset: page * size, //pagination related (page starts at 0)
+                    order: [
+                        ['title', 'ASC']
+                    ]
                 })
             }else{
                 //findAll, create, update etc. are built-in Sequelize methods
              songs = await Song.findAndCountAll({
                 limit: size, //pagination related
-                offset: page * size //pagination related (page starts at 0)
+                offset: page * size, //pagination related (page starts at 0)
+                order: [
+                    ['title', 'ASC']
+                ]
             })
             }
             //res.send(songs)

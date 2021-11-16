@@ -53,10 +53,10 @@ const routes = [
   component: () => import('../components/RecentlyViewed.vue')
 },
 {
-  path: '/views',
-  name: 'views',
+  path: '/song-list',
+  name: 'song-list',
   //lazy loading of components - for performance improvement
-  component: () => import('../components/SongsByViews.vue')
+  component: () => import('../components/SongList.vue')
 }
     ]
   },

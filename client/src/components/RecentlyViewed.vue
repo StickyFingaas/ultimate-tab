@@ -14,8 +14,9 @@
           row-key="id"
           @row-click="onRowClick"
         />
-      </panel> </q-page
-  ></q-layout>
+      </panel>
+    </q-page>
+  </q-layout>
 </template>
 
 <script>

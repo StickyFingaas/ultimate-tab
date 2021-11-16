@@ -20,9 +20,9 @@ const route = (app) => {
     app.delete('/bookmarks/:bookmarkId', authorize, BookmarksControl.deleteBookmark)
     app.get('/history', authorize, HistoriesControl.getHistory)
     app.post('/history', authorize, HistoriesControl.createHistory)
-    app.post('/ratings', RatingsControl.createRating)
-    //app.put('/ratings/:ratingId', authorize, RatingsControl.updateRating)
-    // app.delete('/ratings/:ratingId', authorize, RatingsControl.deleteRating)
+    app.post('/ratings', authorize, RatingsControl.createRating)
+    app.put('/ratings/:ratingId', authorize, RatingsControl.updateRating)
+    app.delete('/ratings/:ratingId', authorize, RatingsControl.deleteRating)
     app.get('/ratings/:songId', RatingsControl.getSongRatings)
 
 }

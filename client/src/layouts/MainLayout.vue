@@ -52,11 +52,11 @@
 
             <q-item-section> Recent </q-item-section>
           </q-item>
-          <q-item clickable v-ripple :to="{ name: 'views' }" exact>
+          <q-item clickable v-ripple :to="{ name: 'song-list' }" exact>
             <q-item-section avatar>
               <q-icon name="swap_vert" />
             </q-item-section>
-            <q-item-section>Songs by Views</q-item-section>
+            <q-item-section>Song List</q-item-section>
           </q-item>
         </q-list>
       </q-scroll-area>

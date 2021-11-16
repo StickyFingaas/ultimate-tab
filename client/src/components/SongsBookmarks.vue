@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       bookmarks: [],
-       columns: [
+      columns: [
         {
           name: "title",
           align: "center",

@@ -1,5 +1,5 @@
 <template>
-  <panel title="Songs" width="45" style="margin: 1em; ">
+  <panel title="Songs" width="45" style="margin: 1em">
     <template v-slot:action v-if="isLoggedIn">
       <router-link to="create" style="text-decoration: none">
         <q-btn
@@ -33,7 +33,7 @@
       >
         <q-card-section class="row items-center">
           <q-card-section>
-            <q-img class="img" :src="song.albumImage" :alt="song.title"/>
+            <q-img class="img" :src="song.albumImage" :alt="song.title" />
             <div class="text-h6 text-orange-9">{{ song.title }}</div>
             <div class="text-subtitle2">by {{ song.artist }}</div>
           </q-card-section>
@@ -181,8 +181,7 @@ export default {
         this.error = data;
         const allSongs = (await SongsService.getAllSongs({ page: value })).data;
         this.songs = allSongs.content; //mounted is commented out bcs the immediate property makes the request immediate on load
-            console.log(this.songs);
-
+        console.log(this.songs);
       },
       immediate: true,
     },
@@ -200,8 +199,8 @@ export default {
 }
 
 .img {
-  width: 20em;
-  height: 20em;
-  object-fit: fit
+  width: 15em;
+  height: 15em;
+  object-fit: fit;
 }
 </style>

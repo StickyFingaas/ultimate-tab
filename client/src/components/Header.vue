@@ -74,6 +74,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("showbase/setToken", null);
+      this.$router.push({ path: "/songs" });
     },
   },
 };
