@@ -182,7 +182,6 @@ export default {
 
     async ratingModel(newVal, oldVal) {
       if (oldVal === 0 || (oldVal === null && newVal !== 0)) {
-        //console.log(`CREATE Old val ${oldVal}, new val ${newVal}`);
         const rating = await RatingsService.createRating(
           newVal,
           this.user.id,
@@ -192,14 +191,12 @@ export default {
           this.ratingObject = rating.data;
         }
       } else if (oldVal !== 0 && oldVal !== newVal && newVal !== 0) {
-        //console.log(`EDIT Old val ${oldVal}, new val ${newVal}`);
         await RatingsService.updateRating(
           newVal,
           this.ratingObject.id,
           this.user.id
         );
       } else if (oldVal !== 0 && newVal === 0) {
-        //console.log(`DELETE Old val ${oldVal}, new val ${newVal}`);
         await RatingsService.deleteRating(this.ratingObject.id);
         this.ratingObject = null;
       }

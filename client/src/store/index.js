@@ -10,4 +10,5 @@ const store = createStore({
   strict: true,
   plugins: [createPersistedState()], //persists the vuex store data upon refresh in browser's local storage
 })
+
 export default store

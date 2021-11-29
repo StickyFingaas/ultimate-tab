@@ -16,7 +16,7 @@ import passport from './passport.js'
 //basic express server
 const app = express()
 
-//required string format from morgan API
+//required string format from morgan API *'combined' represents a standard log output*
 app.use(morgan('combined'))
 //easy parsing of json data
 app.use(express.json())
@@ -25,7 +25,7 @@ app.use(cors())
 
 route(app)
 
-//force: true drops all tables upon app build
+//sync({force: true}) drops all tables upon app build
 db.sequelize.sync().then(() => {
     app.listen(config.port)
     console.log(`Server started on port ${config.port}`);
