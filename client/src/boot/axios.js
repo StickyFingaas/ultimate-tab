@@ -1,5 +1,6 @@
 import axios from 'axios'
-import store from '../store/index.js'
+import store from '../store/index.js'//since this file is adressed as a global in quasar config file, Vuex state will be globally scoped
+
 export default () => {
     return axios.create({
         baseURL: 'http://localhost:8081/',
