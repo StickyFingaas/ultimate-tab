@@ -10,7 +10,7 @@
       >
         <q-table :rows="songs" :columns="columns" row-key="id">
           <template v-slot:body="props">
-            <q-tr @click="onRowClick">
+            <q-tr>
               <!-- unresolved redirection to song on click-->
               <q-td key="albumImage" :props="props">
                 <img
@@ -112,18 +112,10 @@ export default {
           field: "views",
           sortable: true,
         },
-        ,
       ],
       isLoggedIn: this.$store.getters["showbase/getLoggedIn"], //vuex getter which returns if the user is logged in
       user: this.$store.getters["showbase/getUser"].username,
     };
-  },
-  methods: {
-    onRowClick(event, id) {
-      //unresolved
-      //this.$router.push("/songs/" + props.row.id);
-      console.log(id);
-    },
   },
   async mounted() {
     // goal is to collect songs from all subsets of pages and merge them into one array
